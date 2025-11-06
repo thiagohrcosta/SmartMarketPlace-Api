@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_06_000346) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_06_152601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_06_000346) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "verified", default: false
+    t.integer "reputation", default: 0
+    t.boolean "is_active", default: true
     t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
