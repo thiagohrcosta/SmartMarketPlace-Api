@@ -1,12 +1,16 @@
 module Api
   module V1
     class CompaniesController < Api::V1::BaseController
-      before_action :authenticate_user_from_token!, except: [:index]
-      before_action :set_company, only: [:update]
+      before_action :authenticate_user_from_token!, except: [:index, :show]
+      before_action :set_company, only: [:update, :show]
 
       def index
         companies = Company.all
         render json: companies, status: :ok
+      end
+
+      def show
+        render json: @company, status: :ok
       end
 
       def create
