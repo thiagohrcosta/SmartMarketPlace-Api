@@ -14,6 +14,14 @@ gem "puma", ">= 5.0"
 gem 'devise'
 
 gem 'devise-jwt'
+
+# gem "openai", "~> 0.34.1"
+
+gem "fuzzy_match"
+
+gem 'dotenv', groups: [:development, :test]
+
+gem "ruby-openai", "~> 8.2.0"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -40,6 +48,9 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'shoulda-matchers', '~> 6.0'
+
+  gem 'pry'
+  gem 'pry-byebug'
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
