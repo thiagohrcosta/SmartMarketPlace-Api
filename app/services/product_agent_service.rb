@@ -52,7 +52,6 @@ class ProductAgentService
     )
 
     content = response.dig("choices", 0, "message", "content")
-
     JSON.parse(content)
   rescue JSON::ParserError
     { "approved" => false, "message" => "Invalid response from AI" }

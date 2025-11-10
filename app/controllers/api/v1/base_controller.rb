@@ -5,6 +5,15 @@ module Api
 
       private
 
+      def product_agent_checker
+        product_agent = ProductAgentService.new(product_params, current_user).call
+
+        unless product_agent["approved"]
+          render json: { error: product_agent["message"] }, status: :unprocessable_entity
+          return
+        end
+      end
+
       def authenticate_user_from_token!
         header = request.headers['Authorization']
         token = header.split(' ').last if header.present?

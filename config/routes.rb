@@ -18,7 +18,10 @@ Rails.application.routes.draw do
       get '/me', to: 'users#me'
 
       resources :companies, only: [:index, :show, :create, :update]
-      resources :products
+      resources :products do
+        patch "delete", to: "products#delete_product", as: :delete_product
+      end
+
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
