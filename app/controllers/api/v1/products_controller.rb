@@ -4,6 +4,15 @@ module Api
       before_action :authenticate_user_from_token!
       before_action :set_company, only: [:create, :update]
       before_action :check_user_company, only: [:create, :update]
+      before_action :set_product, only: [:show, :update]
+      before_action :product_agent_checker, only: [:create, :update]
+
+      def index
+        products = Product.all
+        render json: { products: products }, status: :ok
+      end
+
+      def show;end
 
       def create
         product = current_user.company.products.build(product_params)
@@ -15,7 +24,23 @@ module Api
         end
       end
 
-      def update;end
+      def update
+        if @product.update(product_params)
+          render json: @product, status: :created
+        else
+          render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      # Soft delete
+      def delete_product
+        @product = Product.find(params[:product][:product_id])
+        if @product.update(status: "deleted")
+          render status: :ok
+        else
+          render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
 
       private
 
@@ -27,7 +52,7 @@ module Api
       end
 
       def set_product
-        @product =
+        @product = Product.find(params[:id])
       end
 
       def set_company

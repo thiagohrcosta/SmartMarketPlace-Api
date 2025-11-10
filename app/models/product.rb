@@ -12,6 +12,7 @@ class Product < ApplicationRecord
     available: 0,
     unavailable: 1,
     blocked: 2,
-    suspended: 3
+    suspended: 3,
+    deleted: 4
   }
 end
