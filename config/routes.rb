@@ -16,13 +16,15 @@ Rails.application.routes.draw do
                  }
 
       get '/me', to: 'users#me'
+      post "stripe/webhook", to: "stripe_webhooks#create"
 
       resources :companies, only: [:index, :show, :create, :update]
       resources :products do
         patch "delete", to: "products#delete_product", as: :delete_product
       end
 
-      resources :orders, only: [:create]
+      resources :orders, only: [:index, :show, :create]
+      resources :payments, only: [:create]
 
     end
   end
