@@ -337,6 +337,7 @@ GEM
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
     stringio (3.1.7)
+    stripe (17.2.0)
     thor (1.4.0)
     timeout (0.4.4)
     tsort (0.2.0)
@@ -386,6 +387,7 @@ DEPENDENCIES
   rubocop-rails-omakase
   ruby-openai (~> 8.2.0)
   shoulda-matchers (~> 6.0)
+  stripe
   tzinfo-data
 
 BUNDLED WITH
