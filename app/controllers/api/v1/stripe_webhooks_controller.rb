@@ -6,9 +6,9 @@ module Api
       def create
         puts request.body
         payload = request.body.read
-        sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+        sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
 
-        webhook_secret = ENV['STRIPE_WEBHOOK_SECRET'] || Rails.application.credentials.dig(:stripe, :webhook_secret)
+        webhook_secret = ENV["STRIPE_WEBHOOK_SECRET"] || Rails.application.credentials.dig(:stripe, :webhook_secret)
 
         unless webhook_secret.present?
           Rails.logger.error("Stripe webhook secret not found")
@@ -25,12 +25,12 @@ module Api
           return render json: { error: "Invalid signature" }, status: 400
         end
 
-        case event['type']
-        when 'checkout.session.completed'
-          session = event['data']['object']
+        case event["type"]
+        when "checkout.session.completed"
+          session = event["data"]["object"]
           handle_successful_checkout(session)
-        when 'payment_intent.succeeded'
-          intent = event['data']['object']
+        when "payment_intent.succeeded"
+          intent = event["data"]["object"]
           handle_payment_succeeded(intent)
         else
           Rails.logger.info("Event #{event['type']}")
@@ -42,7 +42,7 @@ module Api
       private
 
       def handle_successful_checkout(session)
-        order_id = session['metadata']&.[]('order_id')
+        order_id = session["metadata"]&.[]("order_id")
 
         unless order_id
           Rails.logger.warn("checkout.session.completed without order_id")

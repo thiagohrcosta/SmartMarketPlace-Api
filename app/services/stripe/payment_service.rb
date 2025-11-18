@@ -8,7 +8,7 @@ module Stripe
     def create_payment_intent
       Stripe::PaymentIntent.create(
         amount: @order.total.to_i,
-        currency: 'usd',
+        currency: "usd",
         confirm: true,
         metadata: {
           order_id: @order.id,

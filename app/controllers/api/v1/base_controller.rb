@@ -10,17 +10,17 @@ module Api
 
         unless product_agent["approved"]
           render json: { error: product_agent["message"] }, status: :unprocessable_entity
-          return
+          nil
         end
       end
 
       def authenticate_user_from_token!
-        header = request.headers['Authorization']
-        token = header.split(' ').last if header.present?
+        header = request.headers["Authorization"]
+        token = header.split(" ").last if header.present?
         decoded = JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
         @current_user = User.find(decoded["id"])
       rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-        render json: { error: 'Not authorized' }, status: :unauthorized
+        render json: { error: "Not authorized" }, status: :unauthorized
       end
 
       def current_user

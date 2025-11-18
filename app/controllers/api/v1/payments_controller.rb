@@ -18,11 +18,11 @@ module Api
         )
 
         session = Stripe::Checkout::Session.create(
-          payment_method_types: ['card'],
+          payment_method_types: [ "card" ],
           line_items: [
             {
               price_data: {
-                currency: 'usd',
+                currency: "usd",
                 product_data: {
                   name: "Order ##{@order.id}"
                 },
@@ -31,7 +31,7 @@ module Api
               quantity: 1
             }
           ],
-          mode: 'payment',
+          mode: "payment",
           success_url: "http://localhost:3001/payment/success?session_id={CHECKOUT_SESSION_ID}",
           cancel_url: "http://localhost:3001/payment/cancel",
           metadata: {

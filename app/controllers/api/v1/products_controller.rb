@@ -2,10 +2,10 @@ module Api
   module V1
     class ProductsController < Api::V1::BaseController
       before_action :authenticate_user_from_token!
-      before_action :set_company, only: [:create, :update]
-      before_action :check_user_company, only: [:create, :update]
-      before_action :set_product, only: [:show, :update]
-      before_action :product_agent_checker, only: [:create, :update]
+      before_action :set_company, only: [ :create, :update ]
+      before_action :check_user_company, only: [ :create, :update ]
+      before_action :set_product, only: [ :show, :update ]
+      before_action :product_agent_checker, only: [ :create, :update ]
 
       def index
         products = Product.all
@@ -47,7 +47,7 @@ module Api
       def check_user_company
         if !current_user.company.present?
           render json: { errors: "User can't create or edit products" }, status: :unprocessable_entity
-          return
+          nil
         end
       end
 

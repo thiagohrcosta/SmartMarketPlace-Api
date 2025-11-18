@@ -5,7 +5,7 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :price, presence: true
-  validates :age_restricted, inclusion: { in: [true, false] }
+  validates :age_restricted, inclusion: { in: [ true, false ] }
   validates :status, presence: true
   validates :stock, presence: true
 

@@ -7,9 +7,9 @@ module Api
         def create
           user = User.new(sign_up_params)
           if user.save
-            render json: { status: 'success', data: user }, status: :created
+            render json: { status: "success", data: user }, status: :created
           else
-            render json: { status: 'error', errors: user.errors.full_messages }, status: :unprocessable_entity
+            render json: { status: "error", errors: user.errors.full_messages }, status: :unprocessable_entity
           end
         end
 
@@ -19,7 +19,7 @@ module Api
           params.require(:user).permit(
             :email, :password, :password_confirmation,
             :full_name, :birthday, :role,
-            address: [:street, :city, :state, :zip]
+            address: [ :street, :city, :state, :zip ]
           )
         end
       end

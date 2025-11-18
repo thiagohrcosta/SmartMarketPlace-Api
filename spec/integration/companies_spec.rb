@@ -2,7 +2,6 @@ require 'swagger_helper'
 
 RSpec.describe 'Companies API', type: :request do
   path '/api/v1/companies' do
-
     get 'List Companies' do
       tags 'Companies'
       produces 'application/json'
@@ -25,10 +24,10 @@ RSpec.describe 'Companies API', type: :request do
               name: { type: :string },
               description: { type: :string }
             },
-            required: ['name', 'description']
+            required: [ 'name', 'description' ]
           }
         },
-        required: ['company']
+        required: [ 'company' ]
       }
 
       response '201', 'company created' do
