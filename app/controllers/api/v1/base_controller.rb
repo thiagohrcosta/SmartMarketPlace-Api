@@ -26,6 +26,12 @@ module Api
       def current_user
         @current_user
       end
+
+      def user_is_admin?
+        unless current_user&.admin?
+          render json: { error: "Forbidden" }, status: :forbidden
+        end
+      end
     end
   end
 end

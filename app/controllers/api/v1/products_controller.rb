@@ -9,16 +9,25 @@ module Api
 
       def index
         products = Product.all
-        render json: { products: products }, status: :ok
+
+        render json: {
+          products: products.map { |product| ProductFormatter.new(product).call }
+        }, status: :ok
       end
 
-      def show;end
+      def show
+        render json: ProductFormatter.new(@product).call, status: :ok
+      end
 
       def create
+        if params[:product][:status].present?
+          params[:product][:status] = params[:product][:status].to_i
+        end
+
         product = current_user.company.products.build(product_params)
 
         if product.save!
-          render json: product, status: :created
+          render json: ProductFormatter.new(product).call, status: :created
         else
           render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
         end
@@ -26,7 +35,7 @@ module Api
 
       def update
         if @product.update(product_params)
-          render json: @product, status: :created
+          render json: ProductFormatter.new(@product).call, status: :ok
         else
           render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
         end
@@ -43,6 +52,19 @@ module Api
       end
 
       private
+
+      def product_json(product)
+        {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          age_restricted: product.age_restricted,
+          status: product.status,
+          stock: product.stock,
+          photos: product.photos.map { |photo| url_for(photo) }
+        }
+      end
 
       def check_user_company
         if !current_user.company.present?
@@ -67,7 +89,8 @@ module Api
           :age_restricted,
           :status,
           :stock,
-          :company_id
+          :company_id,
+          photos: []
         )
       end
     end

@@ -36,7 +36,17 @@ module Api
           cancel_url: "http://localhost:3001/payment/cancel",
           metadata: {
             order_id: @order.id,
-            user_id: current_user.id
+            user_id: current_user.id,
+            products: {
+              items: @order.order_items.map do |item|
+                {
+                    product_id: item.product.id,
+                    name: item.product.name,
+                    quantity: item.quantity,
+                    price: item.price.to_i
+                }
+              end
+            }
           }
         )
 
