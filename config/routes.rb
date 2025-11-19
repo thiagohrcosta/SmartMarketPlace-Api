@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
       resources :orders, only: [ :index, :show, :create ]
       resources :payments, only: [ :create ]
+      resources :alert_messages, only: [ :index, :show, :update ]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

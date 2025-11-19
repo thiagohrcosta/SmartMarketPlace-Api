@@ -1,0 +1,4 @@
+:cron:
+  validate_product_photos:
+    cron: "*/10 * * * *"
+    class: "ValidateProductPhotosJob"
