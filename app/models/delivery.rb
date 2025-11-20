@@ -1,4 +1,6 @@
 class Delivery < ApplicationRecord
+  belongs_to :order
+
   enum status: {
     waiting_payment: "waiting_payment",
     pending_pickup: "pending_pickup",
