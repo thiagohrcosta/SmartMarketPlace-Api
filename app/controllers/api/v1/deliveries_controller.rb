@@ -32,11 +32,22 @@ module Api
           return render json: { error: "Estimated distance exceeds the maximum allowed limit." }, status: :unprocessable_entity
         end
 
+        old_status = @delivery.status
+
         if @delivery.update(delivery_params)
           @delivery.update(courier_id: current_user.id)
+
           if params[:deliveries][:status] == "picked_up"
             @delivery.update(picked_up_at: Time.current)
+          elsif params[:deliveries][:status] == "delivered"
+            @delivery.update(delivered_at: Time.current)
           end
+
+          if old_status != @delivery.status
+            customer = User.find(@delivery.customer_id)
+            DeliveryMailer.with(customer: customer, delivery: @delivery).status_updated.deliver_later
+          end
+
           render json: @delivery, status: :ok
         else
           render json: { errors: @delivery.errors.full_messages }, status: :unprocessable_entity
