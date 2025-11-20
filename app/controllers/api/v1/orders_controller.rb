@@ -7,7 +7,7 @@ module Api
       def index
         @orders = Order.where(user_id: current_user.id)
 
-        render json: { orders: OrderCollectionFormatter.new(@orders).call }
+        render json: { orders: @orders.map { |order| OrderFormatter.new(order).call } }
       end
 
       def show

@@ -17,6 +17,8 @@ module Api
           status: 0
         )
 
+        @order.update(is_active: false)
+
         session = Stripe::Checkout::Session.create(
           payment_method_types: [ "card" ],
           line_items: [
@@ -35,18 +37,18 @@ module Api
           success_url: "http://localhost:3001/payment/success?session_id={CHECKOUT_SESSION_ID}",
           cancel_url: "http://localhost:3001/payment/cancel",
           metadata: {
-            order_id: @order.id,
-            user_id: current_user.id,
+            order_id: @order.id.to_s,
+            user_id: current_user.id.to_s,
             products: {
-              items: @order.order_items.map do |item|
+              items: @order.product_orders.map do |item|
                 {
-                    product_id: item.product.id,
-                    name: item.product.name,
-                    quantity: item.quantity,
-                    price: item.price.to_i
+                  product_id: item.product.id,
+                  name: item.product.name,
+                  quantity: item.amount,
+                  price: item.product.price.to_i
                 }
               end
-            }
+            }.to_json
           }
         )
 

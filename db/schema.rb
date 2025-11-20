@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_004140) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_20_145607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_004140) do
     t.integer "reputation", default: 0
     t.boolean "is_active", default: true
     t.index ["user_id"], name: "index_companies_on_user_id"
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.bigint "courier_id"
+    t.bigint "customer_id", null: false
+    t.bigint "order_id", null: false
+    t.string "status", default: "pending_pickup", null: false
+    t.string "received_by"
+    t.text "delivery_address"
+    t.datetime "picked_up_at"
+    t.datetime "delivered_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courier_id"], name: "index_deliveries_on_courier_id"
+    t.index ["customer_id"], name: "index_deliveries_on_customer_id"
+    t.index ["order_id"], name: "index_deliveries_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -131,6 +147,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_004140) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_messages", "products"
   add_foreign_key "companies", "users"
+  add_foreign_key "deliveries", "orders"
+  add_foreign_key "deliveries", "users", column: "courier_id"
+  add_foreign_key "deliveries", "users", column: "customer_id"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
   add_foreign_key "payments", "users"
