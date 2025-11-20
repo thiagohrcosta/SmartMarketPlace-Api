@@ -15,8 +15,19 @@ class User < ApplicationRecord
     user: 0,
     support: 1,
     saller: 2,
-    admin: 3
+    admin: 3,
+    courier: 4
   }
+
+  has_many :assigned_deliveries,
+         class_name: "Delivery",
+         foreign_key: :courier_id,
+         dependent: :nullify
+
+  has_many :received_deliveries,
+         class_name: "Delivery",
+         foreign_key: :customer_id,
+         dependent: :nullify
 
 
   def generate_jwt

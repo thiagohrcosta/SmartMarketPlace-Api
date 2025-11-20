@@ -32,6 +32,12 @@ module Api
           render json: { error: "Forbidden" }, status: :forbidden
         end
       end
+
+      def is_company_user?
+        unless current_user&.company_id == company_id
+          render json: { error: "Forbidden" }, status: :forbidden
+        end
+      end
     end
   end
 end
