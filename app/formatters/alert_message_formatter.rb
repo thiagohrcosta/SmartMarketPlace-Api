@@ -18,6 +18,7 @@ class AlertMessageFormatter
   def format_single(alert_message)
     {
       id: alert_message.id,
+      company_id: alert_message.company_id,
       message: alert_message.message,
       read: alert_message.read,
       alert_type: alert_message.alert_type,

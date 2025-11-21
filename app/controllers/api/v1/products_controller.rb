@@ -20,18 +20,21 @@ module Api
       end
 
       def create
+        return if company_blocked(@company)
+
         if params[:product][:status].present?
           params[:product][:status] = params[:product][:status].to_i
         end
 
         product = current_user.company.products.build(product_params)
 
-        if product.save!
+        if product.save
           render json: ProductFormatter.new(product).call, status: :created
         else
           render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
         end
       end
+
 
       def update
         if @product.update(product_params)
@@ -52,6 +55,14 @@ module Api
       end
 
       private
+
+      def company_blocked(company)
+        if !company.is_active
+          render json: { errors: "Company is blocked and cannot create or edit products. Contact your support." }, status: :forbidden
+          return true
+        end
+        false
+      end
 
       def product_json(product)
         {

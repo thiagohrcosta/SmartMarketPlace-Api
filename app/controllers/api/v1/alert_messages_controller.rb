@@ -33,7 +33,11 @@ module Api
 
       def my_alerts
         products = Product.where(company_id: @company.id).pluck(:id)
-        @alert_messages = AlertMessage.where(product_id: products)
+        # alert message should get product_id or company id to filter
+        @alert_messages_by_products = AlertMessage.where(product_id: products)
+        @alert_messages_by_company = AlertMessage.where(company_id: @company.id)
+        @alert_messages = @alert_messages_by_products.or(@alert_messages_by_company).order(created_at: :desc)
+
         render json:  AlertMessageFormatter.new(@alert_messages), status: :ok
       end
 

@@ -32,7 +32,7 @@ class ReviewAgentService
       When kind is: scam, fraud, spam, delivery_issue
         → ALWAYS generate a clear admin-friendly message summarizing the issue.
 
-      Output format (always JSON):
+      Output format (always JSON follow this EXACT format):
         {
           "approved": true or false,
           "message": "",

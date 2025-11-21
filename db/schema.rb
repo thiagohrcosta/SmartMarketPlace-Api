@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_21_010617) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_21_165338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,7 +48,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_21_010617) do
     t.string "message", null: false
     t.boolean "read", default: false, null: false
     t.integer "alert_type", null: false
-    t.bigint "product_id", null: false
+    t.bigint "product_id"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_alert_messages_on_company_id"
     t.index ["product_id"], name: "index_alert_messages_on_product_id"
   end
 
@@ -131,8 +133,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_21_010617) do
     t.datetime "updated_at", null: false
     t.text "comment", null: false
     t.integer "rating", null: false
+    t.integer "kind", default: 0, null: false
     t.bigint "user_id", null: false
     t.bigint "order_id", null: false
+    t.integer "company_id"
     t.index ["order_id"], name: "index_reviews_on_order_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
@@ -156,6 +160,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_21_010617) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alert_messages", "companies"
   add_foreign_key "alert_messages", "products"
   add_foreign_key "companies", "users"
   add_foreign_key "deliveries", "orders"
