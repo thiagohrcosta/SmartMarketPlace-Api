@@ -1,5 +1,5 @@
 # SmartMarketplace API
-### _AI-Driven Marketplace Backend — Production-Level, Scalable, Secure.
+### AI-Driven Marketplace Backend — Production-Level, Scalable, Secure.
 
 <p align="left"> <img src="https://img.shields.io/badge/Rails_API-7.x-red?style=for-the-badge" /> <img src="https://img.shields.io/badge/Ruby-3.x-red?style=for-the-badge" /> <img src="https://img.shields.io/badge/OpenAI-Agents-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Stripe-Payments-purple?style=for-the-badge" /> <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Docker-Compose-black?style=for-the-badge" /> <img src="https://img.shields.io/badge/JWT-Auth-green?style=for-the-badge" /> <img src="https://img.shields.io/badge/RSpec-Test_Suite-yellow?style=for-the-badge" /> <img src="https://img.shields.io/badge/RuboCop-Code_Style-orange?style=for-the-badge" /> </p>
 
