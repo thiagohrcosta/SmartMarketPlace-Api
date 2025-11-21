@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       resources :deliveries, only: [ :index, :update ] do
         get "my_deliveries", to: "deliveries#my_deliveries", on: :collection
       end
+
+      resources :reviews, only: [ :create ]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

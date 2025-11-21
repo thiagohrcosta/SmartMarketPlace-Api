@@ -15,7 +15,12 @@ class OrderFormatter
   private
 
   def serialized_order
-    @order.as_json(except: [ :created_at, :updated_at ])
+    @order.as_json(except: [ :created_at, :updated_at ]).merge(
+      delivery: {
+        id: Delivery.find_by(order_id: @order.id)&.id,
+        status: Delivery.find_by(order_id: @order.id)&.status
+      }
+    )
   end
 
   def serialized_product_orders
