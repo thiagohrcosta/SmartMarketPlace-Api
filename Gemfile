@@ -59,6 +59,9 @@ group :development, :test do
   gem "pry"
   gem "pry-byebug"
 
+  gem 'letter_opener'
+  gem 'letter_opener_web'
+
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 

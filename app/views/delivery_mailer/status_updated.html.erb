@@ -1,0 +1,10 @@
+<h1>Hello <%= @customer.full_name %>!</h1>
+
+<p>Your delivery has been updated:</p>
+
+<ul>
+  <li>Delivery ID: <%= @delivery.id %></li>
+  <li>New status: <strong><%= @delivery.status.humanize %></strong></li>
+</ul>
+
+<p>Thank you for using SmartMarketPlace!</p>
