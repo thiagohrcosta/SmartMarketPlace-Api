@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :product_orders, dependent: :destroy
   has_one :payment, dependent: :destroy
   has_one :delivery, dependent: :destroy
+  has_one :review, dependent: :destroy
 
   enum delivery_status: {
     waiting_payment: 0,

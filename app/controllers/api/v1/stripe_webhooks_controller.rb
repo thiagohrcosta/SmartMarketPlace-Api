@@ -57,6 +57,7 @@ module Api
             payload: session.to_json
           )
           Rails.logger.info("Order ##{order_id} paid")
+          Order.find(order_id).update(status: :pending_pickup)
         else
           Rails.logger.warn("Payment not found for order_id=#{order_id}")
         end

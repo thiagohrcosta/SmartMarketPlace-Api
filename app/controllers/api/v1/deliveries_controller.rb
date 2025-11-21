@@ -39,8 +39,19 @@ module Api
 
           if params[:deliveries][:status] == "picked_up"
             @delivery.update(picked_up_at: Time.current)
+            Order.find(@delivery.order_id).update(delivery_status: :picked_up)
+          elsif params[:deliveries][:status] == "on_route"
+            @delivery.update(status: :on_route)
+            Order.find(@delivery.order_id).update(delivery_status: :on_route)
           elsif params[:deliveries][:status] == "delivered"
-            @delivery.update(delivered_at: Time.current)
+            @delivery.update(delivered_at: Time.current, status: :delivered)
+            Order.find(@delivery.order_id).update(delivery_status: :delivered)
+          elsif params[:deliveries][:status] == "returned"
+            @delivery.update(status: :returned)
+            Order.find(@delivery.order_id).update(delivery_status: :returned)
+          elsif params[:deliveries][:status] == "canceled"
+            @delivery.update(status: :canceled)
+            Order.find(@delivery.order_id).update(delivery_status: :canceled)
           end
 
           if old_status != @delivery.status
